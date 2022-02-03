@@ -1,9 +1,17 @@
 apache
 colcon
+filelock
 iterdir
+lstrip
+nargs
+noqa
 pathlib
+plugin
 pytest
 scott
 scspell
 setuptools
+subparser
+subparsers
 thomas
+yaml
