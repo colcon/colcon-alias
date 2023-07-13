@@ -15,7 +15,7 @@ def get_config():
     config_path = get_config_path()
     config_path.mkdir(parents=True, exist_ok=True)
     config_file = config_path / CONFIG_NAME
-    lock_file = config_path / '.{}.lock'.format(CONFIG_NAME)
+    lock_file = config_path / f'.{CONFIG_NAME}.lock'
     try:
         with filelock.FileLock(lock_file, timeout=5):
             with config_file.open() as f:
@@ -31,7 +31,7 @@ def update_config(alias_name, commands):
     config_path = get_config_path()
     config_path.mkdir(parents=True, exist_ok=True)
     config_file = config_path / CONFIG_NAME
-    lock_file = config_path / '.{}.lock'.format(CONFIG_NAME)
+    lock_file = config_path / f'.{CONFIG_NAME}.lock'
     with filelock.FileLock(lock_file, timeout=5):
         with config_file.open('a+') as f:
             f.seek(0)

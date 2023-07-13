@@ -44,8 +44,8 @@ class AliasInvocationVerb(VerbExtensionPoint):
         for command in self._commands:
             argv = command + context.args.additional_args
             print(
-                'Running command alias: {} {}'.format(
-                    context.command_name, ' '.join(argv)))
+                f'Running command alias: {context.command_name} '
+                f"{' '.join(argv)}")
 
             with SuppressUsageOutput([parser] + list(verb_parsers.values())):
                 known_args, _ = parser.parse_known_args(args=argv)

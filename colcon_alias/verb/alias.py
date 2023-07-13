@@ -25,12 +25,10 @@ class AliasVerb(VerbExtensionPoint):
     def main(self, *, context):  # noqa: D102
         update_config(context.args.alias_name, context.args.command)
         if not context.args.command:
-            print(
-                "Alias '{context.args.alias_name}' has "
-                'been removed.'.format_map(locals()))
+            print(f"Alias '{context.args.alias_name}' has been removed.")
         else:
             print(
                 'Registered command list for alias '
-                "'{context.args.alias_name}':".format_map(locals()))
+                f"'{context.args.alias_name}':")
             for command in context.args.command:
-                print('  {}'.format(' '.join(command)))
+                print(f"  {' '.join(command)}")
