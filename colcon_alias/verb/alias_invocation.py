@@ -1,6 +1,8 @@
 # Copyright 2022 Scott K Logan
 # Licensed under the Apache License, Version 2.0
 
+import os
+
 from colcon_core.argument_parser import SuppressUsageOutput
 from colcon_core.command import add_parser_arguments
 from colcon_core.command import add_parsers_without_arguments
@@ -21,6 +23,7 @@ class AliasInvocationVerb(VerbExtensionPoint):
         super().__init__()
         satisfies_version(VerbExtensionPoint.EXTENSION_POINT_VERSION, '^1.0')
         self._commands = commands
+        self._original_cwd = os.getcwd()
 
     def add_arguments(self, *, parser):  # noqa: D102
         parser.add_argument(
@@ -42,6 +45,7 @@ class AliasInvocationVerb(VerbExtensionPoint):
         added_verbs = set()
 
         for command in self._commands:
+            os.chdir(self._original_cwd)
             argv = command + context.args.additional_args
             print(
                 f'Running command alias: {context.command_name} '
