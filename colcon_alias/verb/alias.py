@@ -1,8 +1,11 @@
 # Copyright 2022 Scott K Logan
 # Licensed under the Apache License, Version 2.0
 
+import sys
+
 from colcon_alias.config import update_config
 from colcon_core.plugin_system import satisfies_version
+from colcon_core.verb import get_verb_extensions
 from colcon_core.verb import VerbExtensionPoint
 
 
@@ -23,6 +26,15 @@ class AliasVerb(VerbExtensionPoint):
             metavar=('VERB', 'ARGUMENTS'))
 
     def main(self, *, context):  # noqa: D102
+        if (
+            context.args.command and
+            context.args.alias_name in get_verb_extensions()
+        ):
+            print(
+                'There is already a verb with the name '
+                "'{context.args.alias_name}'".format_map(locals()),
+                file=sys.stderr)
+            return 1
         update_config(context.args.alias_name, context.args.command)
         if not context.args.command:
             print(f"Alias '{context.args.alias_name}' has been removed.")
