@@ -37,3 +37,5 @@ A list of currently registered aliases can be found in the colcon help text::
       buildpkg              build --event-handler console_direct+ --packages-select
 
     ...
+
+Note: When using ``colcon-alias`` with the ``colcon-mixin`` extension, the ``--mixin`` command line argument is applied as an argument to ``--command`` and not used as an actual mixin to the ``alias`` verb.
