@@ -62,13 +62,13 @@ class AliasArgumentDecorator(ArgumentParserDecorator):
             command_strings = [' '.join(c) for c in commands]
 
             commands_ind = ('\n' + ' ' * 24).join(command_strings)
-            aliases.append('  {alias:21} {commands_ind}'.format_map(locals()))
+            aliases.append(f'  {alias:21} {commands_ind}')
 
             commands_ind = '\n  '.join(command_strings)
             alias_parser = self._subparser.add_parser(
                 alias, add_help=False,
                 description='This is an alias for the following command(s):\n'
-                            '  {commands_ind}'.format_map(locals()),
+                            f'  {commands_ind}',
                 formatter_class=self._parser.formatter_class)
 
             extension = AliasInvocationVerb(commands)
