@@ -5,6 +5,7 @@ from colcon_alias.config import get_config
 from colcon_alias.verb.alias_invocation import AliasInvocationVerb
 from colcon_core.argument_parser import ArgumentParserDecorator
 from colcon_core.argument_parser import ArgumentParserDecoratorExtensionPoint
+from colcon_core.argument_parser import logger
 from colcon_core.plugin_system import satisfies_version
 
 
@@ -29,7 +30,18 @@ class AliasArgumentDecorator(ArgumentParserDecorator):
     """Add command aliases verbs to the argument parser."""
 
     def __init__(self, *args, **kwargs):  # noqa: D107
-        super().__init__(*args, **kwargs, _subparser=None, _done=False)
+        super().__init__(
+            *args,
+            **kwargs,
+            _subparser=None,
+            _verbs=set(),
+            _done=False
+        )
+
+    def add_parser(self, *args, **kwargs):  # noqa: D102
+        parser = super().add_parser(*args, **kwargs)
+        self._verbs.add(args[0])
+        return parser
 
     def add_subparsers(self, *args, **kwargs):  # noqa: D102
         self._subparser = super().add_subparsers(*args, **kwargs)
@@ -56,6 +68,13 @@ class AliasArgumentDecorator(ArgumentParserDecorator):
         config = get_config()
         if not config:
             return
+
+        # Aliases may not override verbs
+        for existing_verb in self._subparser._verbs:
+            if config.pop(existing_verb, None):
+                logger.warning(
+                    f"Ignoring command alias '{existing_verb}' in favor of "
+                    'the verb which shares the same name')
 
         aliases = []
         for alias, commands in config.items():
