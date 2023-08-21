@@ -8,6 +8,13 @@ from colcon_core.argument_parser import ArgumentParserDecoratorExtensionPoint
 from colcon_core.argument_parser import logger
 from colcon_core.plugin_system import satisfies_version
 
+try:
+    from colcon_mixin.mixin.mixin_argument import VERB_BLOCKLIST
+except ImportError:
+    pass
+else:
+    VERB_BLOCKLIST.add(('alias', ))
+
 
 class AliasArgumentParserDecorator(ArgumentParserDecoratorExtensionPoint):
     """Add command aliases verbs to the argument parser."""
