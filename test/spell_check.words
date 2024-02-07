@@ -4,11 +4,13 @@ chdir
 colcon
 filelock
 iterdir
+linter
 lstrip
 nargs
 noqa
 pathlib
 plugin
+pydocstyle
 pytest
 scott
 scspell
