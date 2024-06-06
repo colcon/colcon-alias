@@ -1,6 +1,8 @@
 # Copyright 2022 Scott K Logan
 # Licensed under the Apache License, Version 2.0
 
+import os
+
 from colcon_alias.config import get_config
 from colcon_alias.verb.alias_invocation import AliasInvocationVerb
 from colcon_core.argument_parser import ArgumentParserDecorator
@@ -66,11 +68,13 @@ class AliasArgumentDecorator(ArgumentParserDecorator):
         if self._done:
             return
 
+        prog = os.path.basename(self._parser.prog)
+
         add_args_now = False
         if not self._subparser:
             add_args_now = True
             self.add_subparsers(
-                title='colcon verbs', dest='verb_name')
+                title=prog + ' verbs', dest='verb_name')
 
         config = get_config()
         if not config:
@@ -105,7 +109,7 @@ class AliasArgumentDecorator(ArgumentParserDecorator):
             if add_args_now:
                 extension.add_arguments(parser=alias_parser)
 
-        epilog = self._parser.prog + ' aliases:\n' + '\n'.join(aliases)
+        epilog = prog + ' aliases:\n' + '\n'.join(aliases)
         if self._parser.epilog:
             self._parser.epilog = epilog + '\n\n' + self._parser.epilog
         else:
