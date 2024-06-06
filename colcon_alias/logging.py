@@ -3,17 +3,10 @@
 
 import logging
 
-from colcon_core.logging import colcon_logger
-
-
-def _get_effective_log_level():
-    for handler in colcon_logger.handlers:
-        if isinstance(handler, logging.StreamHandler):
-            return handler.level
-    return logging.WARNING
+from colcon_core.logging import get_effective_console_level
 
 
 def configure_filelock_logger():
     """Configure the 'filelock' log level based on colcon's log level."""
-    log_level = _get_effective_log_level()
+    log_level = get_effective_console_level()
     logging.getLogger('filelock').setLevel(log_level)
