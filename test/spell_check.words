@@ -1,4 +1,5 @@
 apache
+argparse
 blocklist
 chdir
 colcon
@@ -12,10 +13,13 @@ pathlib
 plugin
 pydocstyle
 pytest
+quux
 scott
 scspell
 setuptools
 subparser
 subparsers
 thomas
+tmpdir
+unittest
 yaml
