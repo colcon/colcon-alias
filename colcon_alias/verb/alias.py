@@ -44,3 +44,4 @@ class AliasVerb(VerbExtensionPoint):
                 f"'{context.args.alias_name}':")
             for command in context.args.command:
                 print(f"  {' '.join(command)}")
+        return 0
