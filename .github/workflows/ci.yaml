@@ -10,4 +10,4 @@ jobs:
   pytest:
     uses: colcon/ci/.github/workflows/pytest.yaml@cottsay/null-secret
     secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN || '' }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN || ' ' }}
